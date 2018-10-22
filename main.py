@@ -12,27 +12,28 @@ os.environ["SDL_VIDEO_WINDOW_POS"] = "%d,%d" % (window_pos_x, window_pos_y)
 screen_size = (1600, 900)
 screen = pygame.display.set_mode(screen_size)
 pygame.display.set_caption("Conway's Game of life")
+
 # cells measure 10 by 10 and are separated by 1 px
-w = round(screen_size[0] / (10+1))  # set number of cells for the width
-h = round(screen_size[1] / (10+1))  # set number of cells for the height
+width = round(screen_size[0] / (10+1))      # set number of cells for the width
+height = round(screen_size[1] / (10+1))     # set number of cells for the height
 
 
-def intialization(w, h):
+def intialize(width, height):
     """Initialize the game engine and return a blank grid"""
+    
     pygame.init()
-
-    grid = np.array([[0 for x in range(w)] for y in range(h)], dtype=np.int8)  # Create a blank grid
+    grid = np.array([[0 for x in range(width)] for y in range(height)], dtype=np.int8)      # Create a blank grid
     return grid
 
 
-def update():
+def update(grid):
     """Compare each cells with their neighbours and update the board"""
-    global grid
-    grid_next_generation = np.array([[0 for k in range(w+2)]], dtype=np.int8)
 
-    for y in range(1, h+1):
+    grid_next_generation = np.array([[0 for k in range(width+2)]], dtype=np.int8)
+
+    for y in range(1, height+1):
         line = np.array([[0]], dtype=np.int8)
-        for x in range(1, w+1):
+        for x in range(1, width+1):
             neighbours = 0 - grid[y][x]
 
             for i in range(y-1, y+2):
@@ -49,11 +50,12 @@ def update():
 
         line = np.append(line, [[0]], axis=1)
         grid_next_generation = np.append(grid_next_generation, line, axis=0)
-    grid_next_generation = np.append(grid_next_generation, [[0 for k in range(w+2)]], axis=0)
-    grid = grid_next_generation
+    grid_next_generation = np.append(grid_next_generation, [[0 for k in range(width+2)]], axis=0)
+    # grid = grid_next_generation
+    return grid_next_generation
 
 
-grid = intialization(w+2, h+2)
+grid = intialize(width+2, height+2)
 font = pygame.font.SysFont("arial black", 20)
 done = False
 play = False
@@ -61,7 +63,7 @@ turn = 0
 
 # selection loop
 while not done:
-    pygame.time.Clock().tick(5)
+    pygame.time.Clock().tick(60)
     screen.fill((58, 58, 58))
     for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -82,8 +84,8 @@ while not done:
                 except IndexError:
                     print("Click on the grid please")
 
-    for y in range(1, h+1):
-        for x in range(1, w+1):
+    for y in range(1, height+1):
+        for x in range(1, width+1):
             if grid[y][x] == 1:
                 pygame.draw.rect(screen, (255, 255, 255), [(x-1) * (10+1) + 1, (y-1) * (10+1) + 1, 10, 10])
             else:
@@ -103,7 +105,7 @@ while play:
                 play = False
 
     turn += 1
-    update()
+    grid = update(grid)
 
     label = font.render("Generation: " + str(turn), 10, (255, 0, 0))
     screen.blit(label, (4, 4))
