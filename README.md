@@ -1,4 +1,4 @@
-# Conway-s-Game-of-Life
+# conways-game-of-life
 
 - [What is the Conway's Game of Life?](#what-is-the-conway's-game-of-life)
 - [Rules](#rules)
