@@ -2,7 +2,7 @@ import os
 import pygame
 from grid import Grid
 
-WINDOW_SIZE = (400, 400)
+WINDOW_SIZE = (800, 800)
 FPS = 10
 DESIRED_DELTA_TIME = 1 / FPS
 
