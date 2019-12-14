@@ -48,10 +48,12 @@ while running:
     grid.draw(window)
 
     if editing:
-        intructions_label = LABEL_FONT.render("Press 'Enter' to run the simulation", 10, COLOR_RED)
+        intructions_label = LABEL_FONT.render(
+            "Press 'Enter' to run the simulation", 10, COLOR_RED)
         window.blit(intructions_label, LABEL_POSITION)
     else:
-        generation_label = LABEL_FONT.render(f"Generation {generation}", 10, COLOR_RED)
+        generation_label = LABEL_FONT.render(
+            f"Generation {generation}", 10, COLOR_RED)
         window.blit(generation_label, LABEL_POSITION)
 
     pygame.display.flip()
