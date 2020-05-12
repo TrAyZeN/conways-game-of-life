@@ -46,8 +46,8 @@ class Grid:
         return iter(neighbours_coords)
 
     def is_in_range(self, coords):
-        return coords[0] >= 0 and coords[0] < self.width \
-           and coords[1] >= 0 and coords[1] < self.height
+        return 0 <= coords[0] < self.width \
+           and 0 <= coords[1] < self.height
 
     def is_alive(self, cell_coords):
         return self._grid[cell_coords[1]][cell_coords[0]]
